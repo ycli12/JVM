@@ -14,10 +14,12 @@ public class MyClassLoader extends ClassLoader {
         this.codePath = codePath;
     }
 
+    // 首先从修饰符protected中大概可以看出findClass是一个模板方法待实现的方法
+    // findClass 被 loadClass 方法调用，当loadClass调用方法findLoadedClass从
+    // 缓存中找不到类的时候，就委托给父类加载，如果父类/启动类加载器加载不到，再交给
+    // findClass查找并加载。
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        // 如在这之前调用 findClass 则可以实现双亲委派
-
         BufferedInputStream bis = null;
         ByteArrayOutputStream baos = null;
         try {
